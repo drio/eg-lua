@@ -38,10 +38,9 @@ function load_probes(args)
     end
     probe          = tmp[4] .. "N" .. tmp[5];
     h[probe]       = {}
-    h[probe].chrm  = tmp[1]; h[probe].pos = tmp[2]
-    h[probe].id    = tmp[3]; h[probe].three = tmp[4]
-    h[probe].five  = tmp[5]; h[probe].ref   = tmp[6]
-    h[probe].var   = tmp[7]; h[probe].hits  = nil;
+    h[probe].chrm  = tmp[1]; h[probe].pos  = tmp[2]
+    h[probe].id    = tmp[3]; h[probe].ref  = tmp[6];
+    h[probe].var   = tmp[7]; h[probe].hits = nil;
     p = p + 1;
   end
   io.stderr:write("\rReading probes: ", p, "\n");
