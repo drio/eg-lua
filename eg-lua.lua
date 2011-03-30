@@ -56,8 +56,8 @@ local function load_probes(args)
     rc_probe         = do_reverse_comp(probe);
     h[probe]         = {}
     h[rc_probe]      = {} 
-    h[probe].chrm    = tmp[1]; h[probe].pos  = tmp[2]
-    h[probe].id      = tmp[3]; h[probe].ref  = tmp[6];
+    h[probe].chrm    = tmp[1]; h[probe].pos = tmp[2]
+    h[probe].id      = tmp[3]; h[probe].ref = tmp[6];
     h[probe].var     = tmp[7]; 
     h[probe].hits    = nil; 
     h[probe].neg     = false;
@@ -66,7 +66,7 @@ local function load_probes(args)
       
     p = p + 1;
   end
-  io.stderr:write("\rReading probes: ", p, "\n");
+  io.stderr:write("\rReading probes: ", p , "\n");
 
   return h;
 end
@@ -131,20 +131,23 @@ local function show_results(probes)
         local h_neg    = nil; -- hits negative strand
         local rc_probe = do_reverse_comp(k);
         local output   = "";
+        local no_hits  = {A=0, C=0, G=0, T=0, N=0};
 
         if v.neg then -- If probe comes from - strand
           info  = probes[rc_probe];
           h_neg = v.hits;
-          h_pos = probes[rc_probe].hits or {0,0,0,0,0};
+          h_pos = probes[rc_probe].hits or no_hits;
         else
           info  = v
           h_pos = v.hits;
-          h_neg = probes[rc_probe].hits or {0,0,0,0,0};
+          h_neg = probes[rc_probe].hits or no_hits;
         end 
       
         -- Make sure we don't process RC probe again
         probes[rc_probe].processed = true;
 
+        assert(h_pos, "h_pos cannot be nil.");
+        assert(h_neg, "h_neg cannot be nil.");
         -- probe info
         output =
         string.format("%s,%s,%s,%s,%s,",
