@@ -22,6 +22,19 @@ local function load_arguments(arg)
   return args
 end
 
+-- Reverse complement sequence space
+local function ss_reverse_comp(sequence)
+  local t  = { A="T", C="G", G="C", T="A" };
+  local rs = string.reverse(sequence);
+  local rc = "";
+
+  for i = 1, #sequence do
+    c = rs:sub(i,i);
+    rc = rc .. t[c];
+  end
+  return rc;
+end
+
 -- Load probes
 -- 1	100006955	rs4908018	TTTGTCTAAAACAAC	CTTTCACTAGGCTCA	C	A
 local function load_probes(args)

@@ -6,5 +6,5 @@
 1 add lh3 lib for working on fastq and fasta
 2 process compress input
 2 color space
-
-
+2 binomial dist snp caller
+2 only take a window of the probe file
