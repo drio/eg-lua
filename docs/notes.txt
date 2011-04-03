@@ -1,0 +1,2 @@
+export LUA_CPATH="../../tmp/luaprofiler-2.0.2/bin/?.so" ;lua ./eg-lua.lua ./probes.txt ./reads.fa
+ lua ../../tmp/luaprofiler-2.0.2/src/analyzer/summary.lua ./profile
