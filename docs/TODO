@@ -2,9 +2,13 @@
 1 compare with c egenotype
 1 add strandness
 1 unit testing
-1 improve speed and memory usage
+1 improve speed: load chunks of data from files instead going line by line 
+1 improve speed: recode the reverse complement
 1 add lh3 lib for working on fastq and fasta
+1 separate code in different files (check lh3)
+
+2 improve processing arguments
 2 process compress input
 2 color space
 2 binomial dist snp caller
-2 only take a window of the probe file
+DONE 2 only take a window of the probe file --> do it using split better
