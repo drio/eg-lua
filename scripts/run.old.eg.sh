@@ -8,6 +8,6 @@ reads="/Users/drio/Dropbox/git_repo/rGenotype/data/soldata.txt"
 list="/tmp/tmp.eg.txt"
 
 echo "$reads" > $list
-time $old_eg $probes $list output.old 0.5
+time $old_eg $probes $list output.old 1
 cat output.old | sort -t, -k2,2n > o
 mv o output.old
