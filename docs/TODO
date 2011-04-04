@@ -1,11 +1,11 @@
 
-1 compare with c egenotype
-1 add strandness
 1 unit testing
 1 improve speed: load chunks of data from files instead going line by line 
 1 improve speed: recode the reverse complement
-1 add lh3 lib for working on fastq and fasta
 1 separate code in different files (check lh3)
+DONE 1 compare with c egenotype
+DONE 1 add strandness
+1 add lh3 lib for working on fastq and fasta
 
 2 improve processing arguments
 2 process compress input
