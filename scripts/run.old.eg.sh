@@ -1,11 +1,7 @@
 #!/bin/bash
 #
 set -e
-
-old_eg="/Users/drio/Dropbox/git_repo/v1.egenotype/core/eg-counter"
-probes="/Users/drio/Dropbox/git_repo/eg-lua/input/affy.txt"
-reads="/Users/drio/Dropbox/git_repo/rGenotype/data/soldata.txt"
-list="/tmp/tmp.eg.txt"
+source "`dirname ${BASH_SOURCE[0]}`/common.sh"
 
 echo "$reads" > $list
 time $old_eg $probes $list output.old 1
