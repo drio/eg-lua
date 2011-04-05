@@ -1,4 +1,3 @@
-
 scripts_path=`dirname ${BASH_SOURCE[0]}`
 bin_path="$scripts_path/../bin"
 export LUA_PATH="$bin_path/?.lua"
