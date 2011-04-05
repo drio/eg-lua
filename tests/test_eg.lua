@@ -1,8 +1,8 @@
 -- Some super function to test
 function my_super_function( arg1, arg2 ) return arg1 + arg2 end
 
--- Unit testing starts
 require('luaunit')
+require('')
 
 TestMyStuff = {} --class
     function TestMyStuff:testWithNumbers()
