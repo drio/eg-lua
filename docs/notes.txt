@@ -1,2 +1,13 @@
-export LUA_CPATH="../../tmp/luaprofiler-2.0.2/bin/?.so" ;lua ./eg-lua.lua ./probes.txt ./reads.fa
- lua ../../tmp/luaprofiler-2.0.2/src/analyzer/summary.lua ./profile
+To use profiling in lua:
+
+1. donwload luaprofiler
+2. compile the library
+3. Add the path to the location of the library:
+  export LUA_CPATH="../../tmp/luaprofiler-2.0.2/bin/?.so" 
+4. require 'profiler' in your lua code
+5. add profiler.start("profile_output")
+6. add profiler.end
+7. Run it:
+  $ lua ./eg-lua.lua ./probes.txt ./reads.fa
+8. Use the analyzer to beautify the outptu of the profiling:
+  $ lua scripts/summary.lua ./profile_output
