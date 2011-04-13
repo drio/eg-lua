@@ -1,32 +1,26 @@
 -- Load probes
--- 1	100006955	rs4908018	TTTGTCTAAAACAAC	CTTTCACTAGGCTCA	C	A
+-- 1  100006955 rs4908018 TTTGTCTAAAACAAC CTTTCACTAGGCTCA C A
 local function load_probes(args)
-  local tmp             = {nil, nil, nil, nil, nil, nil, nil}; -- fields in line
   local h               = {};
   local p               = 0; -- Number of probes
-  local probe           = nil;
-  local rc_probe        = nil;
   local do_reverse_comp = bio.ss.reverse_comp;
 
   for line in io.lines(args.probes_fn) do
     if p % cfg.print_lines == 0 then io.stderr:write("\rReading probes: ", p) end
-    local i = 1;
-    for field in line:gmatch("[^\t]+") do
-      tmp[i] = field;
-      i = i + 1;
-    end
-    probe            = tmp[4] .. "N" .. tmp[5];
-    rc_probe         = do_reverse_comp(probe);
-    h[probe]         = {}
-    h[rc_probe]      = {} 
-    h[probe].chrm    = tmp[1]; h[probe].pos = tmp[2]
-    h[probe].id      = tmp[3]; h[probe].ref = tmp[6];
-    h[probe].var     = tmp[7]; 
-    h[probe].hits    = nil; 
-    h[probe].neg     = false;
-    h[rc_probe].hits = nil;  -- Don't add probe information when rc (save mem)
-    h[rc_probe].neg  = true; -- probe comes from the negative strand
-      
+    local chrm,pos,id,left,right,ref,var
+      = line:match(string.rep('([^\t]+)\t', 6)..'([^\t]+)')
+
+    local probe = left .. "N" .. right;
+    local rc_probe = do_reverse_comp(probe);
+    h[probe] = {
+      chrm = chrm;
+      pos  = pos;
+      id   = id;
+      ref  = ref;
+      var  = var;
+      neg  = false;
+    }
+    h[rc_probe] = { neg  = true; } -- probe comes from the negative strand
     p = p + 1;
   end
   io.stderr:write("\rReading probes: ", p , "\n");
