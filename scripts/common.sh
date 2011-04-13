@@ -15,7 +15,17 @@ eg_lua="$bin_path/eg.lua"
 # Set the paths so lua can find the profiler
 # enable cfg.profile* in the arguments
 # Use compiler = lua if you want to enable profiling
-profile_lib="$HOME/tmp/luaprofiler-2.0.2/bin/profiler.so"
-compiler=$lua
-analyzer="$scripts_path/summary.lua"
-[ -f $profile_lib ] && export LUA_CPATH="$HOME/tmp/luaprofiler-2.0.2/bin/?.so"
+# Then: 
+# rm -f *.profile &&  scripts/run.small.normal.sh && lua ./scripts/summary.lua probes.profile
+profile_enabled=`cat $bin_path/arguments.lua | grep profile | grep true | wc -l`
+if [ $profile_enabled -gt 0 ] # profiling enable
+then
+  profile_lib="$HOME/tmp/luaprofiler-2.0.2/bin/profiler.so"
+  compiler=$lua
+  analyzer="$scripts_path/summary.lua"
+  [ -f $profile_lib ] && export LUA_CPATH="$HOME/tmp/luaprofiler-2.0.2/bin/?.so"
+  echo "Profiling enabled. Using: $compiler"
+else # no profiling
+  compiler=$jit
+  echo "NO Profiling detected. Using: $compiler"
+fi

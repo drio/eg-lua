@@ -19,7 +19,8 @@ cfg.print_lines    = 100000;
 cfg.usage          = "Usage: " .. arg[0] .. " <probes_file> <reads_file>\n"
 cfg.flank_size     = 15;
 cfg.probe_size     = (cfg.flank_size * 2) + 1;
-cfg.profile_probes = true;
+cfg.profile_probes = false;
+cfg.profile_reads  = false;
 
 arguments = {
   load_them = load_arguments;
