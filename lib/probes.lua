@@ -41,12 +41,10 @@ local function slide_over_read(read, pl)
       nt_value = sub_read:sub(fs+1, fs+1)
       sub_read = sub_read:sub(1, fs) .. "N" .. sub_read:sub(fs+2)
       if pl[sub_read] then -- We have a probe with that sequence
-        if pl[sub_read].hits then -- We have hits for that probe already
-          pl[sub_read].hits[nt_value] = pl[sub_read].hits[nt_value] + 1
-        else
+        if not pl[sub_read].hits then -- No previous hits
           pl[sub_read].hits = {A=0, C=0, G=0, T=0, N=0}
-          pl[sub_read].hits[nt_value] = 1
         end
+        pl[sub_read].hits[nt_value] = pl[sub_read].hits[nt_value] + 1
         n_hits = n_hits + 1
       end
       i = i + 1
