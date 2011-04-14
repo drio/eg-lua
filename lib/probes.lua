@@ -32,7 +32,6 @@ end
 -- to look for perfect matches. If there is a hit, it saves it in the table.
 local function slide_over_read(read, pl)
     local i      = 1;
-    local slice  = nil;
     local ps     = cfg.probe_size;
     local fs     = cfg.flank_size;
     local n_hits = 0;
@@ -58,16 +57,16 @@ end
 -- Screen reads against the probes
 local function screen_reads(args, probes)
   local i = 0;
-  local name = nil;
+  --local name = nil;
   local seq  = nil;
   local n_hits = 0;
   local find_hits = slide_over_read
 
   for l in io.lines(args.reads_fn) do
     local tmp = l:find("%s"); -- Grab the first string on the line
-    if l:byte(1) == 62 or l:byte(1) == 64 then -- ">" || "@"
+    if l:byte(1) == 62 then -- ">"
       i = i + 1;
-      name = (tmp and l:sub(2, tmp-1)) or l:sub(2);
+      --name = (tmp and l:sub(2, tmp-1)) or l:sub(2);
       if i % cfg.print_lines == 0 then io.stderr:write("\rProcessing reads: ", i, "|", n_hits) end
     else
       n_hits = n_hits + find_hits(l, probes);

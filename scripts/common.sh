@@ -1,6 +1,7 @@
 scripts_path=`dirname ${BASH_SOURCE[0]}`
 bin_path="$scripts_path/../bin"
-export LUA_PATH="$bin_path/?.lua"
+lib_path="$scripts_path/../lib"
+export LUA_PATH="$lib_path/?.lua"
 
 lua="`which lua`"
 jit="$HOME/tmp/LuaJIT-1.1.6/src/luajit"
@@ -17,7 +18,7 @@ eg_lua="$bin_path/eg.lua"
 # Use compiler = lua if you want to enable profiling
 # Then: 
 # rm -f *.profile &&  scripts/run.small.normal.sh && lua ./scripts/summary.lua probes.profile
-profile_enabled=`cat $bin_path/arguments.lua | grep profile | grep true | wc -l`
+profile_enabled=`cat $lib_path/arguments.lua | grep profile | grep true | wc -l`
 if [ $profile_enabled -gt 0 ] # profiling enable
 then
   profile_lib="$HOME/tmp/luaprofiler-2.0.2/bin/profiler.so"
@@ -29,3 +30,5 @@ else # no profiling
   compiler=$jit
   echo "NO Profiling detected. Using: $compiler"
 fi
+
+set -e
