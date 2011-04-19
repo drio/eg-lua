@@ -5,7 +5,7 @@ local function slide_over_read(read, pl)
   local n_hits = 0
 
   print("READ: " .. read .. " : " .. #read)
-  while ps + i <= #read+1 do -- while the window is within the size of the read
+  while ps + i <= #read do -- while the window is within the size of the read
     sub_read = read:sub(i, ps+i-1)
     nt_value = sub_read:sub(fs+1, fs+1)
     sub_read = sub_read:sub(1, fs) .. "N" .. sub_read:sub(fs+2)
