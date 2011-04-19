@@ -28,28 +28,30 @@ local function load_probes(args)
   return h
 end
 
--- Given a read and a probe list(table) slides a window (size of the probes)
--- to look for perfect matches. If there is a hit, it saves it in the table.
--- Example:
--- Assuming a probe table with only:
--- pl = { "34N67"  = {} }
--- and a read:
--- 1234A6789
--- This function will:
--- 12N4A
---  23NA6
---   34A67  -- HIT! save the hit for that probe -> pl["34N67"] = {A = 1, .....}
---    4A678
---     A6789
--- In this case, ps = 5; fs = 2 (user configurable parameters)
---
+--[[
+Given a read and a probe list(table) slides a window (size of the probes)
+to look for perfect matches. If there is a hit, it saves it in the table.
+Example:
+Assuming a probe table with only:
+  pl = { "CCGTT"  = {} }
+and a read:
+  AACCGTTAA
+This function slide a window of 5 characters across the read string:
+  AACCG 
+   ACCGT
+    CCGTT --> HIT! save the hit for that probe -> pl["CCGTT"] = { ... , G = 1, ... }
+     CGTTA
+      GTTAA
+In this case, ps = 5; fs = 2 (user configurable parameters)
+--]]
 local function slide_over_read(read, pl)
   local i        = 1
   local ps       = cfg.probe_size
   local fs       = cfg.flank_size
   local n_hits   = 0
+  local tmp      = #read + 1
 
-  while ps + i <= #read+1 do -- while the window is within the size of the read
+  while ps + i <= tmp do -- while the window is within the size of the read
     local t        = read:sub(i, ps+i-1)
     local sub_read = t:sub(1, fs) .. "N" .. t:sub(fs+2)
     local look_up  = pl[sub_read]
