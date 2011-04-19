@@ -31,25 +31,28 @@ end
 -- Given a read and a probe list(table) slides a window (size of the probes)
 -- to look for perfect matches. If there is a hit, it saves it in the table.
 local function slide_over_read(read, pl)
-    local i      = 1
-    local ps     = cfg.probe_size
-    local fs     = cfg.flank_size
-    local n_hits = 0
+  local i        = 1
+  local ps       = cfg.probe_size
+  local fs       = cfg.flank_size
+  local n_hits   = 0
+  local sub_read = nil
+  local t        = nil -- tmp (sub_read without N)
+  local nt_value = nil
 
-    while ps + i <= #read+1 do -- while the window is within the size of the read
-      sub_read = read:sub(i, ps+i-1)
-      nt_value = sub_read:sub(fs+1, fs+1)
-      sub_read = sub_read:sub(1, fs) .. "N" .. sub_read:sub(fs+2)
-      if pl[sub_read] then -- We have a probe with that sequence
-        if not pl[sub_read].hits then -- No previous hits
-          pl[sub_read].hits = {A=0, C=0, G=0, T=0, N=0}
-        end
-        pl[sub_read].hits[nt_value] = pl[sub_read].hits[nt_value] + 1
-        n_hits = n_hits + 1
+  while ps + i <= #read+1 do -- while the window is within the size of the read
+    t        = read:sub(i, ps+i-1)
+    sub_read = t:sub(1, fs) .. "N" .. t:sub(fs+2)
+    if pl[sub_read] then -- We have a probe with that sequence
+      nt_value = read:sub(i, ps+i-1):sub(fs+1, fs+1) 
+      if not pl[sub_read].hits then -- No previous hits
+        pl[sub_read].hits = {A=0, C=0, G=0, T=0, N=0}
       end
-      i = i + 1
+      pl[sub_read].hits[nt_value] = pl[sub_read].hits[nt_value] + 1
+      n_hits = n_hits + 1
     end
-    return n_hits
+    i = i + 1
+  end
+  return n_hits
 end
 
 -- Screen reads against the probes
