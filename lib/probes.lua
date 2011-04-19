@@ -36,11 +36,13 @@ end
 -- and a read:
 -- 1234A6789
 -- This function will:
--- 12N4A 
---  23NA6 
---   34A67  -- HIT! save A info
---    4A678 
---     A6789 
+-- 12N4A
+--  23NA6
+--   34A67  -- HIT! save the hit for that probe -> pl["34N67"] = {A = 1, .....}
+--    4A678
+--     A6789
+-- In this case, ps = 5; fs = 2 (user configurable parameters)
+--
 local function slide_over_read(read, pl)
   local i        = 1
   local ps       = cfg.probe_size
